@@ -35,12 +35,12 @@ class Thrower {
             if (result === 0) {
                 this.heads++;
 
-                let frequency = this.heads / this.throws.length;
+                let frequency = this.heads;
                 this.headsFrequency.push(frequency);
             } else {
                 this.tails++;
 
-                let frequency = this.tails / this.throws.length;
+                let frequency = this.tails;
                 this.tailsFrequency.push(frequency);
             }
 
