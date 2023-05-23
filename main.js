@@ -3,12 +3,11 @@ import crypto from 'crypto';
 
 class Thrower {
     heads = 0;    
-    headsFrequency = [];
     tails = 0;
-    tailsFrequency = [];
     throws = [];
     throwsResult = [];
     errors = [];
+    randomErrors = [];
     error = 0;
 
     constructor() {
@@ -17,6 +16,7 @@ class Thrower {
         this.throws = [];
         this.throwsResult = [];
         this.errors = [];
+        this.randomErrors = [];
         this.error = 0;
     }
 
@@ -34,20 +34,17 @@ class Thrower {
 
             if (result === 0) {
                 this.heads++;
-
-                let frequency = this.heads;
-                this.headsFrequency.push(frequency);
             } else {
                 this.tails++;
-
-                let frequency = this.tails;
-                this.tailsFrequency.push(frequency);
             }
 
             if (this.throwsResult.length % 2 == 0) {
                 let half = this.throwsResult.length/2;
                 let temporaryError = half - this.heads;
                 this.errors.push(temporaryError);
+                
+                let percentage = this.heads / this.throwsResult.length;
+                this.randomErrors.push(percentage - 0.5);
             }
         }
     }
@@ -80,19 +77,16 @@ class Thrower {
         return this.errors;
     }
 
-    getHeadsFrequency() {
-        return this.headsFrequency;
+    getRandomErrors() {
+        return this.randomErrors;
     }
 
-    getTailsFrequency() {
-        return this.tailsFrequency;
-    }
 }
 
 
 let thrower = new Thrower();
 
-thrower.throwCoins(1000);
+thrower.throwCoins(10000);
 
 console.log(`testa: ${thrower.getHeads()}`);
 console.log(`croce: ${thrower.getTails()}`);
@@ -111,18 +105,9 @@ plot(plotData);
 
 const plotData1 = [{
     x: thrower.getThrows(),
-    y: thrower.getHeadsFrequency(),
+    y: thrower.getRandomErrors(),
     type: 'scatter',
     name: "Frequenza testa"
 }]
 
 plot(plotData1);
-
-const plotData2 = [{
-    x: thrower.getThrows(),
-    y: thrower.getTailsFrequency(),
-    type: 'scatter',
-    name: "Frequenza croce"
-}]
-
-plot(plotData2);
